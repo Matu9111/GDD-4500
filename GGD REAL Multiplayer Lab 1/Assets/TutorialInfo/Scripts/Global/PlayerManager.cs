@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
+using UnityEngine.SceneManagement;
 
 namespace GDD4500.LAB01
 {
@@ -201,6 +202,7 @@ namespace GDD4500.LAB01
             }
             Debug.Log("[Lobby] Match started.");
         }
+
 
         public void StartLobby()
         {

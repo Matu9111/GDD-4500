@@ -23,6 +23,11 @@ namespace GDD4500.LAB01
             _rigidbody = GetComponent<Rigidbody>();
         }
 
+        public void OnDestory()
+        {
+
+        }
+
         public void DoMove(Vector2 value)
         {
             _moveVector.x += value.x;
