@@ -19,6 +19,7 @@ namespace GDD4500.LAB01
 
         private void Start()
         {
+            PlayerManager.Instance.StartLobby();
             _existingPlayers = PlayerManager.Instance.GetPlayers();
 
             PlayerManager.Instance.OnPlayerJoined += OnPlayerJoined;

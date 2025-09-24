@@ -7,6 +7,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
 using UnityEngine.SceneManagement;
+using System.Collections;
+
 
 namespace GDD4500.LAB01
 {
@@ -15,6 +17,11 @@ namespace GDD4500.LAB01
         public static PlayerManager Instance;
 
         public Action<PlayerInputContext> OnPlayerJoined;
+
+        // win zones
+        [SerializeField] private Collider winZone1;
+        [SerializeField] private Collider winZone2;
+
 
         [Header("Asset & Maps")]
         [SerializeField] private InputActionAsset sharedAsset;    // your .inputactions (has Lobby + Gameplay)
@@ -54,6 +61,7 @@ namespace GDD4500.LAB01
             // Ensure this object is not destroyed when the scene is unloaded
             DontDestroyOnLoad(this.gameObject);
         }
+
 
         void OnEnable()
         {
@@ -110,8 +118,8 @@ namespace GDD4500.LAB01
                 // if (alt != null) schemeToUse = alt;
                 // else
                 // {
-                    Debug.Log("[Lobby] Keyboard scheme taken.");
-                    return;
+                Debug.Log("[Lobby] Keyboard scheme taken.");
+                return;
                 //}
             }
 
@@ -208,7 +216,7 @@ namespace GDD4500.LAB01
         {
             // Stop listening for new joins
             if (_joinAction != null) _joinAction.Enable();
-            
+
             foreach (var p in _players)
             {
                 var map = p.Actions.FindActionMap(lobbyMapName, true);
@@ -280,6 +288,29 @@ namespace GDD4500.LAB01
         {
             return _players.Select(p => p.Handler).ToList();
         }
+
+        public void ReturnToLobby(string scene)
+        {
+            foreach (var p in _players)
+            {
+                InputUser user = p.User;
+                user.UnpairDevicesAndRemoveUser();
+                if (p.Handler != null)
+                {
+                    Destroy(p.Handler.gameObject);
+                }
+            }
+
+            _players.Clear();
+            _claimedKBMSchemes.Clear();
+
+            SceneManager.LoadScene(scene);
+        }
+
+
     }
+
+
+
 }
 
